@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_custom_error_page/custom_error.dart';
+import 'package:flutter_custom_error_page/home_page.dart';
+
 void main() {
   runApp(const App());
 }
@@ -11,31 +14,14 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const HomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+      theme: ThemeData(primarySwatch: Colors.blue),
+      builder: (BuildContext context, Widget? child) {
+        ErrorWidget.builder =
+            (FlutterErrorDetails details) => CustomError(errorDetails: details);
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: const Center(),
+        return child ?? const SizedBox.shrink();
+      },
+      home: const HomePage(title: 'Custom Error Page'),
     );
   }
 }
